@@ -35,246 +35,246 @@
         }
 
         .header h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-            font-weight: 600;
+            font-size 28px;
+            margin-bottom 8px;
+            font-weight 600;
         }
 
         .header p {
-            opacity: 0.95;
-            font-size: 15px;
+            opacity 0.95;
+            font-size 15px;
         }
 
         .content {
-            padding: 30px;
+            padding 30px;
         }
 
         .input-section {
-            margin-bottom: 25px;
+            margin-bottom 25px;
         }
 
         .input-section label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 16px;
+            display block;
+            margin-bottom 10px;
+            font-weight 600;
+            color #2c3e50;
+            font-size 16px;
         }
 
         textarea {
-            width: 100%;
-            min-height: 200px;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-family: 'Traditional Arabic', 'Arial', sans-serif;
-            font-size: 16px;
-            line-height: 1.8;
-            resize: vertical;
-            transition: border-color 0.3s;
+            width 100%;
+            min-height 200px;
+            padding 15px;
+            border 2px solid #e0e0e0;
+            border-radius 10px;
+            font-family 'Traditional Arabic', 'Arial', sans-serif;
+            font-size 16px;
+            line-height 1.8;
+            resize vertical;
+            transition border-color 0.3s;
         }
 
-        textarea:focus {
-            outline: none;
-            border-color: #cc785c;
+        textareafocus {
+            outline none;
+            border-color #cc785c;
         }
 
         .char-counter {
-            text-align: left;
-            margin-top: 8px;
-            font-size: 13px;
-            color: #666;
-            font-weight: 500;
+            text-align left;
+            margin-top 8px;
+            font-size 13px;
+            color #666;
+            font-weight 500;
         }
 
         .options-section {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
+            margin-bottom 20px;
+            padding 15px;
+            background #f8f9fa;
+            border-radius 10px;
         }
 
         .checkbox-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display flex;
+            align-items center;
+            gap 10px;
         }
 
         .checkbox-wrapper input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
+            width 20px;
+            height 20px;
+            cursor pointer;
         }
 
         .checkbox-wrapper label {
-            cursor: pointer;
-            user-select: none;
-            font-size: 15px;
-            color: #2c3e50;
+            cursor pointer;
+            user-select none;
+            font-size 15px;
+            color #2c3e50;
         }
 
         .button-group {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
+            display flex;
+            gap 15px;
+            margin-bottom 25px;
+            flex-wrap wrap;
         }
 
         button {
-            padding: 14px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
+            padding 14px 30px;
+            border none;
+            border-radius 10px;
+            font-size 16px;
+            font-weight 600;
+            cursor pointer;
+            transition all 0.3s;
+            font-family inherit;
         }
 
         .btn-process {
-            background: linear-gradient(135deg, #cc785c 0%, #b86449 100%);
-            color: white;
-            flex: 1;
-            min-width: 200px;
+            background linear-gradient(135deg, #cc785c 0%, #b86449 100%);
+            color white;
+            flex 1;
+            min-width 200px;
         }
 
-        .btn-process:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(204, 120, 92, 0.3);
+        .btn-processhovernot(disabled) {
+            transform translateY(-2px);
+            box-shadow 0 6px 20px rgba(204, 120, 92, 0.3);
         }
 
-        .btn-process:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+        .btn-processdisabled {
+            opacity 0.6;
+            cursor not-allowed;
         }
 
         .btn-copy, .btn-download {
-            background: #f0f0f0;
-            color: #2c3e50;
-            flex: 0.5;
-            min-width: 120px;
+            background #f0f0f0;
+            color #2c3e50;
+            flex 0.5;
+            min-width 120px;
         }
 
-        .btn-copy:hover, .btn-download:hover {
-            background: #e0e0e0;
-            transform: translateY(-2px);
+        .btn-copyhover, .btn-downloadhover {
+            background #e0e0e0;
+            transform translateY(-2px);
         }
 
-        .btn-copy:disabled, .btn-download:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
+        .btn-copydisabled, .btn-downloaddisabled {
+            opacity 0.5;
+            cursor not-allowed;
+            transform none;
         }
 
         .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            background: #fff3cd;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: 2px solid #ffc107;
+            display none;
+            text-align center;
+            padding 20px;
+            background #fff3cd;
+            border-radius 10px;
+            margin-bottom 20px;
+            border 2px solid #ffc107;
         }
 
         .loading.show {
-            display: block;
+            display block;
         }
 
         .loading-spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #cc785c;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-left: 10px;
+            display inline-block;
+            width 30px;
+            height 30px;
+            border 3px solid #f3f3f3;
+            border-top 3px solid #cc785c;
+            border-radius 50%;
+            animation spin 1s linear infinite;
+            margin-left 10px;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform rotate(0deg); }
+            100% { transform rotate(360deg); }
         }
 
         .stats {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            display: none;
+            background linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding 20px;
+            border-radius 10px;
+            margin-bottom 25px;
+            display none;
         }
 
         .stats.show {
-            display: block;
+            display block;
         }
 
         .stats h3 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 18px;
-            text-align: center;
+            color #2c3e50;
+            margin-bottom 20px;
+            font-size 18px;
+            text-align center;
         }
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 2px 1fr;
-            gap: 25px;
-            align-items: start;
+            display grid;
+            grid-template-columns 1fr 2px 1fr;
+            gap 25px;
+            align-items start;
         }
 
         .stats-column {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            display flex;
+            flex-direction column;
+            gap 12px;
         }
 
         .stats-divider {
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent, #cc785c, transparent);
-            border-radius: 2px;
+            width 2px;
+            height 100%;
+            background linear-gradient(to bottom, transparent, #cc785c, transparent);
+            border-radius 2px;
         }
 
         .stat-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 15px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display flex;
+            justify-content space-between;
+            padding 12px 15px;
+            background white;
+            border-radius 8px;
+            box-shadow 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .stat-label {
-            color: #495057;
-            font-weight: 500;
-            font-size: 14px;
+            color #495057;
+            font-weight 500;
+            font-size 14px;
         }
 
         .stat-value {
-            color: #cc785c;
-            font-weight: 700;
-            font-size: 18px;
+            color #cc785c;
+            font-weight 700;
+            font-size 18px;
         }
 
         .comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 25px;
+            display grid;
+            grid-template-columns 1fr 1fr;
+            gap 20px;
+            margin-top 25px;
         }
 
         .text-box {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            min-height: 300px;
+            background #f8f9fa;
+            border-radius 10px;
+            padding 20px;
+            min-height 300px;
         }
 
         .text-box h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 18px;
-            padding-bottom: 10px;
+            color #2c3e50;
+            margin-bottom 15px;
+            font-size 18px;
+            padding-bottom 10px;
             border-bottom: 2px solid #cc785c;
         }
 
@@ -602,7 +602,6 @@ const corrections = [
     ["بأنَّهم", "بانهم"],
     ["بأنَّهما", "بانهما"],
     ["براءة", "برأة"],
-    ["بقولِهِ:", "بقوله"],
     ["بقولها:", "بقولها"],
     ["ــ تعالى ــ", "تعالى"],
     ["تعهَّدا", "تعهد"],
