@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            background: linear-gradient(135deg, #FAF6EF 0%, #F0E8DC 100%);
             padding: 20px;
             min-height: 100vh;
         }
@@ -23,279 +23,273 @@
             margin: 0 auto;
             background: white;
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 20px rgba(61, 40, 23, 0.10);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #cc785c 0%, #b86449 100%);
+            background: linear-gradient(135deg, #8B5A2B 0%, #6B4423 100%);
             color: white;
             padding: 30px;
             text-align: center;
         }
 
         .header h1 {
-            font-size 28px;
-            margin-bottom 8px;
-            font-weight 600;
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         .header p {
-            opacity 0.95;
-            font-size 15px;
+            opacity: 0.95;
+            font-size: 15px;
         }
 
         .content {
-            padding 30px;
+            padding: 30px;
         }
 
         .input-section {
-            margin-bottom 25px;
+            margin-bottom: 25px;
         }
 
         .input-section label {
-            display block;
-            margin-bottom 10px;
-            font-weight 600;
-            color #2c3e50;
-            font-size 16px;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #3D2817;
+            font-size: 16px;
         }
 
         textarea {
-            width 100%;
-            min-height 200px;
-            padding 15px;
-            border 2px solid #e0e0e0;
-            border-radius 10px;
-            font-family 'Traditional Arabic', 'Arial', sans-serif;
-            font-size 16px;
-            line-height 1.8;
-            resize vertical;
-            transition border-color 0.3s;
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid #E0D6C4;
+            border-radius: 10px;
+            font-family: 'Traditional Arabic', 'Arial', sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            resize: vertical;
+            transition: border-color 0.3s;
         }
 
-        textareafocus {
-            outline none;
-            border-color #cc785c;
+        textarea:focus {
+            outline: none;
+            border-color: #8B5A2B;
         }
 
         .char-counter {
-            text-align left;
-            margin-top 8px;
-            font-size 13px;
-            color #666;
-            font-weight 500;
+            text-align: left;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #6B5842;
+            font-weight: 500;
         }
 
         .options-section {
-            margin-bottom 20px;
-            padding 15px;
-            background #f8f9fa;
-            border-radius 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #FAF6EF;
+            border-radius: 10px;
         }
 
         .checkbox-wrapper {
-            display flex;
-            align-items center;
-            gap 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .checkbox-wrapper input[type="checkbox"] {
-            width 20px;
-            height 20px;
-            cursor pointer;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #8B5A2B;
         }
 
         .checkbox-wrapper label {
-            cursor pointer;
-            user-select none;
-            font-size 15px;
-            color #2c3e50;
+            cursor: pointer;
+            user-select: none;
+            font-size: 15px;
+            color: #3D2817;
         }
 
         .button-group {
-            display flex;
-            gap 15px;
-            margin-bottom 25px;
-            flex-wrap wrap;
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
         }
 
         button {
-            padding 14px 30px;
-            border none;
-            border-radius 10px;
-            font-size 16px;
-            font-weight 600;
-            cursor pointer;
-            transition all 0.3s;
-            font-family inherit;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
         }
 
         .btn-process {
-            background linear-gradient(135deg, #cc785c 0%, #b86449 100%);
-            color white;
-            flex 1;
-            min-width 200px;
+            background: linear-gradient(135deg, #8B5A2B 0%, #6B4423 100%);
+            color: white;
+            flex: 1;
+            min-width: 200px;
         }
 
-        .btn-processhovernot(disabled) {
-            transform translateY(-2px);
-            box-shadow 0 6px 20px rgba(204, 120, 92, 0.3);
+        .btn-process:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 68, 35, 0.35);
         }
 
-        .btn-processdisabled {
-            opacity 0.6;
-            cursor not-allowed;
+        .btn-process:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .btn-copy, .btn-download {
-            background #f0f0f0;
-            color #2c3e50;
-            flex 0.5;
-            min-width 120px;
+            background: #EDE4D3;
+            color: #3D2817;
+            flex: 0.5;
+            min-width: 120px;
         }
 
-        .btn-copyhover, .btn-downloadhover {
-            background #e0e0e0;
-            transform translateY(-2px);
+        .btn-copy:hover, .btn-download:hover {
+            background: #DDD0B8;
+            transform: translateY(-2px);
         }
 
-        .btn-copydisabled, .btn-downloaddisabled {
-            opacity 0.5;
-            cursor not-allowed;
-            transform none;
+        .btn-copy:disabled, .btn-download:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .loading {
-            display none;
-            text-align center;
-            padding 20px;
-            background #fff3cd;
-            border-radius 10px;
-            margin-bottom 20px;
-            border 2px solid #ffc107;
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #FDF6E3;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #D4A747;
         }
 
         .loading.show {
-            display block;
+            display: block;
         }
 
         .loading-spinner {
-            display inline-block;
-            width 30px;
-            height 30px;
-            border 3px solid #f3f3f3;
-            border-top 3px solid #cc785c;
-            border-radius 50%;
-            animation spin 1s linear infinite;
-            margin-left 10px;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #F0E8DC;
+            border-top: 3px solid #8B5A2B;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
         }
 
         @keyframes spin {
-            0% { transform rotate(0deg); }
-            100% { transform rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .stats {
-            background linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding 20px;
-            border-radius 10px;
-            margin-bottom 25px;
-            display none;
+            background: linear-gradient(135deg, #FAF6EF 0%, #EDE4D3 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: none;
         }
 
         .stats.show {
-            display block;
+            display: block;
         }
 
         .stats h3 {
-            color #2c3e50;
-            margin-bottom 20px;
-            font-size 18px;
-            text-align center;
+            color: #3D2817;
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
         }
 
         .stats-grid {
-            display grid;
-            grid-template-columns 1fr 2px 1fr;
-            gap 25px;
-            align-items start;
+            display: grid;
+            grid-template-columns: 1fr 2px 1fr;
+            gap: 25px;
+            align-items: start;
         }
 
         .stats-column {
-            display flex;
-            flex-direction column;
-            gap 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .stats-divider {
-            width 2px;
-            height 100%;
-            background linear-gradient(to bottom, transparent, #cc785c, transparent);
-            border-radius 2px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #8B5A2B, transparent);
+            border-radius: 2px;
         }
 
         .stat-item {
-            display flex;
-            justify-content space-between;
-            padding 12px 15px;
-            background white;
-            border-radius 8px;
-            box-shadow 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(61, 40, 23, 0.06);
         }
 
         .stat-label {
-            color #495057;
-            font-weight 500;
-            font-size 14px;
+            color: #5A4632;
+            font-weight: 500;
+            font-size: 14px;
         }
 
         .stat-value {
-            color #cc785c;
-            font-weight 700;
-            font-size 18px;
+            color: #B8860B;
+            font-weight: 700;
+            font-size: 18px;
         }
 
         .comparison {
-            display grid;
-            grid-template-columns 1fr 1fr;
-            gap 20px;
-            margin-top 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 25px;
         }
 
         .text-box {
-            background #f8f9fa;
-            border-radius 10px;
-            padding 20px;
-            min-height 300px;
+            background: #FAF6EF;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 300px;
         }
 
         .text-box h3 {
-            color #2c3e50;
-            margin-bottom 15px;
-            font-size 18px;
-            padding-bottom 10px;
-            border-bottom: 2px solid #cc785c;
+            color: #3D2817;
+            margin-bottom: 15px;
+            font-size: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #8B5A2B;
         }
 
         .text-content {
             font-family: 'Traditional Arabic', 'Arial', sans-serif;
             line-height: 1.8;
-            color: #2c3e50;
+            color: #3D2817;
             white-space: pre-wrap;
             word-wrap: break-word;
         }
 
         .corrected-word {
             text-decoration: underline;
-            text-decoration-color: #e74c3c;
-            text-decoration-thickness: 2px;
-            text-underline-offset: 3px;
-        }
-
-        .corrected-word {
-            text-decoration: underline;
-            text-decoration-color: #e74c3c;
+            text-decoration-color: #C0392B;
             text-decoration-thickness: 2px;
             text-underline-offset: 3px;
         }
@@ -304,11 +298,11 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #28a745;
+            background: #6B4423;
             color: white;
             padding: 15px 25px;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(61, 40, 23, 0.20);
             display: none;
             animation: slideIn 0.3s ease;
             z-index: 1000;
@@ -355,13 +349,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>⚖️ معالج الصكوك القضائية</h1>
-            <p>أداة احترافية لمعالجة وتنسيق نصوص الضبوط القضائية - نسخة 4</p>
+            <h1> معالج الصكوك القضائية</h1>
+            <p>أداة احترافية لمعالجة وتنسيق نصوص الضبوط القضائية - نسخة 5</p>
         </div>
 
         <div class="content">
             <div class="input-section">
-                <label for="inputText">📝 أدخل نص الضبوط:</label>
+                <label for="inputText"> أدخل نص الضبوط:</label>
                 <textarea id="inputText" placeholder="الصق النص هنا..."></textarea>
                 <div class="char-counter" id="inputCharCount">عدد الأحرف: 0</div>
             </div>
@@ -369,12 +363,12 @@
             <div class="options-section">
                 <div class="checkbox-wrapper">
                     <input type="checkbox" id="enableCorrection" checked>
-                    <label for="enableCorrection">✨ تفعيل التشكيل التلقائي والتصحيح</label>
+                    <label for="enableCorrection"> تفعيل التشكيل التلقائي والتصحيح</label>
                 </div>
             </div>
 
             <div class="button-group">
-                <button class="btn-process" onclick="processText()" id="processBtn">⚡ معالجة النص</button>
+                <button class="btn-process" onclick="processText()" id="processBtn"> معالجة النص</button>
                 <button class="btn-copy" id="copyBtn" onclick="copyResult()" disabled>📋 نسخ النتيجة</button>
                 <button class="btn-download" id="downloadBtn" onclick="downloadResult()" disabled>💾 تحميل كملف</button>
             </div>
@@ -385,7 +379,7 @@
             </div>
 
             <div class="stats" id="stats">
-                <h3>📊 إحصائيات العمليات</h3>
+                <h3> إحصائيات العمليات</h3>
                 <div class="stats-grid">
                     <div class="stats-column">
                         <div class="stat-item">
@@ -397,7 +391,7 @@
                             <span class="stat-value" id="deletedCount">0</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-label">عدد الكلمات المشكَّلة:</span>
+                            <span class="stat-label">عدد الكلمات المشكَّلة:</span>
                             <span class="stat-value" id="correctionsCount">0</span>
                         </div>
                     </div>
@@ -439,231 +433,228 @@
     <script>
         let processedResult = '';
 
-        // قاموس التصحيحات (أول 300 كلمة بعد تصفية الحركات البسيطة)
-const corrections = [
-    ["ادَّعت", "أدعت"],
-    ["ادَّعى", "أدعى"],
-    ["ادَّعي", "أدعي"],
-    ["ادَّعيا", "أدعيا"],
-    ["اعترف", "أعترف"],
-    ["اكتساب", "أكتساب"],
-    ["آلاف", "ألاف"],
-    ["امتنع", "أمتنع"],
-    ["اتِّفاق", "إتفاق"],
-    ["اثنان", "إثنان"],
-    ["إبَّان", "ابان"],
-    ["أبو", "ابو"],
-    ["أتمكَّن", "اتمكن"],
-    ["إثبات", "اثبات"],
-    ["أثناء", "اثناء"],
-    ["إجراء", "اجراء"],
-    ["أُجِيْبَ", "اجيب"],
-    ["أُجِيْبَت", "اجيبت"],
-    ["إحالة", "احالة"],
-    ["أُحِيْلَ", "احيل"],
-    ["أخرجه", "اخرجه"],
-    ["إخلاء", "اخلاء"],
-    ["إدارة", "ادارة"],
-    ["إدخال", "ادخال"],
-    ["إذا", "اذا"],
-    ["إزالة", "ازالة"],
-    ["أسباب", "اسباب"],
-    ["أُسبوع", "اسبوع"],
-    ["إشكال", "اشكال"],
-    ["أصالةً", "اصالة"],
-    ["أصحاب", "اصحاب"],
-    ["إطلاقًا", "اطلاقا"],
-    ["إعادة", "اعادة"],
-    ["إعطاء", "اعطاء"],
-    ["أُعْطِيَ", "اعطي"],
-    ["إعلام", "اعلام"],
-    ["إعلان", "اعلان"],
-    ["أُعلم", "اعلم"],
-    ["أُعِيدَ", "اعيد"],
-    ["إفهام", "افهام"],
-    ["إقامة", "اقامة"],
-    ["أقرَّ", "اقر"],
-    ["إقرار", "اقرار"],
-    ["إكمال", "اكمال"],
-    ["الإبل", "الأبل"],
-    ["الاثنين", "الأثنين"],
-    ["الإعلام", "الأعلام"],
-    ["الاتَّصالات", "الإتصالات"],
-    ["الاتِّفاق", "الإتفاق"],
-    ["الاتِّهام", "الإتهام"],
-    ["الاثنين", "الإثنين"],
-    ["الادِّعاء", "الإدعاء"],
-    ["الاستئناف", "الإستئناف"],
-    ["الاستثمار", "الإستثمار"],
-    ["الاستحكام", "الإستحكام"],
-    ["الاستدلال", "الإستدلال"],
-    ["الاستعداد", "الإستعداد"],
-    ["الاستلام", "الإستلام"],
-    ["الاستناد", "الإستناد"],
-    ["الاشتراك", "الإشتراك"],
-    ["الاطِّلاع", "الإطلاع"],
-    ["الاعتراض", "الإعتراض"],
-    ["الأغنام", "الإغنام"],
-    ["الاقتناع", "الإقتناع"],
-    ["الانتِّقال", "الإنتقال"],
-    ["الانتهاء", "الإنتهاء"],
-    ["الانقياد", "الإنقياد"],
-    ["إلَّا", "الا"],
-    ["الإبل", "الابل"],
-    ["الإجراء", "الاجراء"],
-    ["الإجمال", "الاجمال"],
-    ["الإجماليَّة", "الاجمالية"],
-    ["الإخلاء", "الاخلاء"],
-    ["الأدلَّة", "الادلة"],
-    ["الإسلام", "الاسلام"],
-    ["الإعلام", "الاعلام"],
-    ["الأغنام", "الاغنام"],
-    ["الإقامة", "الاقامة"],
-    ["الأقلِّ", "الاقل"],
-    ["الإمام", "الامام"],
-    ["الإنصاف", "الانصاف"],
-    ["الأولاد", "الاولاد"],
-    ["الإيداع", "الايداع"],
-    ["التَّعزيز", "التعزير"],
-    ["الاستئناف", "التمييز"],
-    ["الضَّبط", "الظبط"],
-    ["المتعدِّدة", "المتعدده"],
-    ["المتوفَّـى", "المتوفى"],
-    ["الـمُخدِّرات", "المخدرات"],
-    ["الـمُخدِّرات", "المخدِّرات"],
-    ["الـمُخنَّث", "المخنث"],
-    ["ــ المذكور ــ", "المذكور"],
-    ["ــ المذكوران ــ", "المذكوران"],
-    ["ــ المذكورة ــ", "المذكورة"],
-    ["ــ المذكور ــ", "المذكورر"],
-    ["ــ المذكورين ــ", "المذكورين"],
-    ["ــ المرفق صورته ــ", "المرفق صورته"],
-    ["الـمُروِّج", "المروج"],
-    ["الـمُروِّجان", "المروجان"],
-    ["الـمُروِّجون", "المروجون"],
-    ["الـمُروِّجين", "المروجين"],
-    ["ــ المشار إليها ــ", "المشار إليها"],
-    ["الـمُكلَّف", "المكلف"],
-    ["المنـزل", "المنزل"],
-    ["ــ المنوَّه عنها ــ", "المنوه عنها"],
-    ["ــ المنوَّه عنه ــ", "المنوَّه عنه"],
-    ["الـمُورِّث", "المورث"],
-    ["ــ الموصوفة في الدَّعوى ــ", "الموصوفة في الدعوى"],
-    ["الـمُيسَّر", "الميسر"],
-    ["التَّنفيذيّ", "النفيذي"],
-    ["إلى", "الى"],
-    ["إليَّ", "الي"],
-    ["إلينا", "الينا"],
-    ["إليه", "اليه"],
-    ["إليها", "اليها"],
-    ["أمَّا", "اما"],
-    ["إمارة", "امارة"],
-    ["أنَّ", "ان"],
-    ["إنشاءات", "انشاءات"],
-    ["إنَّما", "انما"],
-    ["أنَّنا", "اننا"],
-    ["أنَّني", "انني"],
-    ["أنَّه", "انه"],
-    ["أنَّها", "انها"],
-    ["إنهاء", "انهاء"],
-    ["إنهائيَّة", "انهائية"],
-    ["أنَّهما", "انهما"],
-    ["أُنهِيَ", "انهي"],
-    ["أهليَّة", "اهلية"],
-    ["أهليَّته", "اهليته"],
-    ["أولًا", "اولا"],
-    ["أي", "اي"],
-    ["إيَّاه", "اياه"],
-    ["إيَّاها", "اياها"],
-    ["إيداع", "ايداع"],
-    ["إيصال", "ايصال"],
-    ["أيضًا", "ايضا"],
-    ["إيضاح", "ايضاح"],
-    ["إيقافه", "ايقافه"],
-    ["بإعلان", "بأعلان"],
-    ["باتِّفاق", "بإتفاق"],
-    ["ــ بإذن الله ــ", "بإذن الله"],
-    ["بانتهاء", "بإنتهاء"],
-    ["بإحضار", "باحضار"],
-    ["بإحضاره", "باحضاره"],
-    ["بإحضارها", "باحضارها"],
-    ["بإذنِهِ", "باذنه"],
-    ["بإعادة", "باعادة"],
-    ["بإعلان", "باعلان"],
-    ["إكمال", "باكمال"],
-    ["بالاحتيال", "بالإحتيال"],
-    ["بالاشتراك", "بالإشتراك"],
-    ["بالاطِّلاع", "بالإطلاع"],
-    ["بالاعتراض", "بالإعتراض"],
-    ["بالتَّـرجمة", "بالترجمة"],
-    ["بالـمُخدِّرات", "بالمخدرات"],
-    ["بالـمُخدِّرات", "بالمخدِّرات"],
-    ["بأنَّ", "بان"],
-    ["بأنَّهم", "بانهم"],
-    ["بأنَّهما", "بانهما"],
-    ["براءة", "برأة"],
-    ["بقولها:", "بقولها"],
-    ["ــ تعالى ــ", "تعالى"],
-    ["تعهَّدا", "تعهد"],
-    ["حظيرة", "حضيرة"],
-    ["حذف", "خذف"],
-    ["ــ دون رقمٍ ــ", "دون رقم"],
-    ["ــ رحمه الله ــ", "رحمه الله"],
-    ["إذا", "غذا"],
-    ["إلغاء", "غلغاء"],
-    ["على", "غلى"],
-    ["عن", "غن"],
-    ["فأُجِيْبَت", "فاجيبت"],
-    ["فأُعِيدَ", "فاعيد"],
-    ["فالاحتيال", "فالإحتيال"],
-    ["فالاشتراك", "فالإشتراك"],
-    ["فالاعتراض", "فالإعتراض"],
-    ["فالـمُخدِّرات", "فالمخدرات"],
-    ["فإنَّه", "فانه"],
-    ["فوق", "فقو"],
-    ["فلم يبقَ", "فلم يبقى"],
-    ["فقط", "قفط"],
-    ["كالاختصاص", "كالإختصاص"],
-    ["طباعة", "كباعة"],
-    ["لابن", "لإبن"],
-    ["لانتهاء", "لإنتهاء"],
-    ["لأنَّني", "لانني"],
-    ["لأنَّه", "لانه"],
-    ["لأنَّها", "لانها"],
-    ["الدُّسوقيّ", "لدسوقي"],
-    ["للاحتيال", "للإحتيال"],
-    ["للاستناد", "للإستناد"],
-    ["للاطِّلاع", "للإطلاع"],
-    ["للمنـزل", "للمنزل"],
-    ["لم يبقَ", "لم يبقى"],
-    ["لـما", "لما"],
-    ["لـمُهرِّبي", "لمهربي"],
-    ["ما لديَّ", "ما لدى"],
-    ["ما لديَّ.", "ما لدي"],
-    ["ما لديَّ", "مالدي"],
-    ["متعدِّدة", "متعدده"],
-    ["معزِّي", "معزى"],
-    ["مع", "مغ"],
-    ["منـزلًا", "منزلا"],
-    ["مؤسَّسة", "موسسة"],
-    ["و بما", "وبما"],
-    ["و قدره", "وقدره"],
-    ["و قدرها", "وقدرها"],
-    ["و لا", "ولا"],
-    ["و ليس", "وليس"],
-    ["و هو", "وهو"],
-    ["و هي", "وهي"],
-    ["يدَّعى", "يدعي"],
-    ["يـُمثِّله", "يمثله"],
-    ["يـُمثِّلها", "يمثلها"],
-    ["يـُمثِّلهم", "يمثلهم"],
-    ["يـُمثِّلهما", "يمثلهما"]
-];
+        const corrections = [
+            ["ادَّعت", "أدعت"],
+            ["ادَّعى", "أدعى"],
+            ["ادَّعي", "أدعي"],
+            ["ادَّعيا", "أدعيا"],
+            ["اعترف", "أعترف"],
+            ["اكتساب", "أكتساب"],
+            ["آلاف", "ألاف"],
+            ["امتنع", "أمتنع"],
+            ["اتِّفاق", "إتفاق"],
+            ["اثنان", "إثنان"],
+            ["إبَّان", "ابان"],
+            ["أبو", "ابو"],
+            ["أتمكَّن", "اتمكن"],
+            ["إثبات", "اثبات"],
+            ["أثناء", "اثناء"],
+            ["إجراء", "اجراء"],
+            ["أُجِيْبَ", "اجيب"],
+            ["أُجِيْبَت", "اجيبت"],
+            ["إحالة", "احالة"],
+            ["أُحِيْلَ", "احيل"],
+            ["أخرجه", "اخرجه"],
+            ["إخلاء", "اخلاء"],
+            ["إدارة", "ادارة"],
+            ["إدخال", "ادخال"],
+            ["إذا", "اذا"],
+            ["إزالة", "ازالة"],
+            ["أسباب", "اسباب"],
+            ["أُسبوع", "اسبوع"],
+            ["إشكال", "اشكال"],
+            ["أصالةً", "اصالة"],
+            ["أصحاب", "اصحاب"],
+            ["إطلاقًا", "اطلاقا"],
+            ["إعادة", "اعادة"],
+            ["إعطاء", "اعطاء"],
+            ["أُعْطِيَ", "اعطي"],
+            ["إعلام", "اعلام"],
+            ["إعلان", "اعلان"],
+            ["أُعلم", "اعلم"],
+            ["أُعِيدَ", "اعيد"],
+            ["إفهام", "افهام"],
+            ["إقامة", "اقامة"],
+            ["أقرَّ", "اقر"],
+            ["إقرار", "اقرار"],
+            ["إكمال", "اكمال"],
+            ["الإبل", "الأبل"],
+            ["الاثنين", "الأثنين"],
+            ["الإعلام", "الأعلام"],
+            ["الاتَّصالات", "الإتصالات"],
+            ["الاتِّفاق", "الإتفاق"],
+            ["الاتِّهام", "الإتهام"],
+            ["الاثنين", "الإثنين"],
+            ["الادِّعاء", "الإدعاء"],
+            ["الاستئناف", "الإستئناف"],
+            ["الاستثمار", "الإستثمار"],
+            ["الاستحكام", "الإستحكام"],
+            ["الاستدلال", "الإستدلال"],
+            ["الاستعداد", "الإستعداد"],
+            ["الاستلام", "الإستلام"],
+            ["الاستناد", "الإستناد"],
+            ["الاشتراك", "الإشتراك"],
+            ["الاطِّلاع", "الإطلاع"],
+            ["الاعتراض", "الإعتراض"],
+            ["الأغنام", "الإغنام"],
+            ["الاقتناع", "الإقتناع"],
+            ["الانتِّقال", "الإنتقال"],
+            ["الانتهاء", "الإنتهاء"],
+            ["الانقياد", "الإنقياد"],
+            ["إلَّا", "الا"],
+            ["الإبل", "الابل"],
+            ["الإجراء", "الاجراء"],
+            ["الإجمال", "الاجمال"],
+            ["الإجماليَّة", "الاجمالية"],
+            ["الإخلاء", "الاخلاء"],
+            ["الأدلَّة", "الادلة"],
+            ["الإسلام", "الاسلام"],
+            ["الإعلام", "الاعلام"],
+            ["الأغنام", "الاغنام"],
+            ["الإقامة", "الاقامة"],
+            ["الأقلِّ", "الاقل"],
+            ["الإمام", "الامام"],
+            ["الإنصاف", "الانصاف"],
+            ["الأولاد", "الاولاد"],
+            ["الإيداع", "الايداع"],
+            ["التَّعزيز", "التعزير"],
+            ["الاستئناف", "التمييز"],
+            ["الضَّبط", "الظبط"],
+            ["المتعدِّدة", "المتعدده"],
+            ["المتوفَّـى", "المتوفى"],
+            ["الـمُخدِّرات", "المخدرات"],
+            ["الـمُخدِّرات", "المخدِّرات"],
+            ["الـمُخنَّث", "المخنث"],
+            ["ــ المذكور ــ", "المذكور"],
+            ["ــ المذكوران ــ", "المذكوران"],
+            ["ــ المذكورة ــ", "المذكورة"],
+            ["ــ المذكور ــ", "المذكورر"],
+            ["ــ المذكورين ــ", "المذكورين"],
+            ["ــ المرفق صورته ــ", "المرفق صورته"],
+            ["الـمُروِّج", "المروج"],
+            ["الـمُروِّجان", "المروجان"],
+            ["الـمُروِّجون", "المروجون"],
+            ["الـمُروِّجين", "المروجين"],
+            ["ــ المشار إليها ــ", "المشار إليها"],
+            ["الـمُكلَّف", "المكلف"],
+            ["المنـزل", "المنزل"],
+            ["ــ المنوَّه عنها ــ", "المنوه عنها"],
+            ["ــ المنوَّه عنه ــ", "المنوَّه عنه"],
+            ["الـمُورِّث", "المورث"],
+            ["ــ الموصوفة في الدَّعوى ــ", "الموصوفة في الدعوى"],
+            ["الـمُيسَّر", "الميسر"],
+            ["التَّنفيذيّ", "النفيذي"],
+            ["إلى", "الى"],
+            ["إليَّ", "الي"],
+            ["إلينا", "الينا"],
+            ["إليه", "اليه"],
+            ["إليها", "اليها"],
+            ["أمَّا", "اما"],
+            ["إمارة", "امارة"],
+            ["أنَّ", "ان"],
+            ["إنشاءات", "انشاءات"],
+            ["إنَّما", "انما"],
+            ["أنَّنا", "اننا"],
+            ["أنَّني", "انني"],
+            ["أنَّه", "انه"],
+            ["أنَّها", "انها"],
+            ["إنهاء", "انهاء"],
+            ["إنهائيَّة", "انهائية"],
+            ["أنَّهما", "انهما"],
+            ["أُنهِيَ", "انهي"],
+            ["أهليَّة", "اهلية"],
+            ["أهليَّته", "اهليته"],
+            ["أولًا", "اولا"],
+            ["أي", "اي"],
+            ["إيَّاه", "اياه"],
+            ["إيَّاها", "اياها"],
+            ["إيداع", "ايداع"],
+            ["إيصال", "ايصال"],
+            ["أيضًا", "ايضا"],
+            ["إيضاح", "ايضاح"],
+            ["إيقافه", "ايقافه"],
+            ["بإعلان", "بأعلان"],
+            ["باتِّفاق", "بإتفاق"],
+            ["ــ بإذن الله ــ", "بإذن الله"],
+            ["بانتهاء", "بإنتهاء"],
+            ["بإحضار", "باحضار"],
+            ["بإحضاره", "باحضاره"],
+            ["بإحضارها", "باحضارها"],
+            ["بإذنِهِ", "باذنه"],
+            ["بإعادة", "باعادة"],
+            ["بإعلان", "باعلان"],
+            ["إكمال", "باكمال"],
+            ["بالاحتيال", "بالإحتيال"],
+            ["بالاشتراك", "بالإشتراك"],
+            ["بالاطِّلاع", "بالإطلاع"],
+            ["بالاعتراض", "بالإعتراض"],
+            ["بالتَّـرجمة", "بالترجمة"],
+            ["بالـمُخدِّرات", "بالمخدرات"],
+            ["بالـمُخدِّرات", "بالمخدِّرات"],
+            ["بأنَّ", "بان"],
+            ["بأنَّهم", "بانهم"],
+            ["بأنَّهما", "بانهما"],
+            ["براءة", "برأة"],
+            ["بقولها:", "بقولها"],
+            ["ــ تعالى ــ", "تعالى"],
+            ["تعهَّدا", "تعهد"],
+            ["حظيرة", "حضيرة"],
+            ["حذف", "خذف"],
+            ["ــ دون رقمٍ ــ", "دون رقم"],
+            ["ــ رحمه الله ــ", "رحمه الله"],
+            ["إذا", "غذا"],
+            ["إلغاء", "غلغاء"],
+            ["على", "غلى"],
+            ["عن", "غن"],
+            ["فأُجِيْبَت", "فاجيبت"],
+            ["فأُعِيدَ", "فاعيد"],
+            ["فالاحتيال", "فالإحتيال"],
+            ["فالاشتراك", "فالإشتراك"],
+            ["فالاعتراض", "فالإعتراض"],
+            ["فالـمُخدِّرات", "فالمخدرات"],
+            ["فإنَّه", "فانه"],
+            ["فوق", "فقو"],
+            ["فلم يبقَ", "فلم يبقى"],
+            ["فقط", "قفط"],
+            ["كالاختصاص", "كالإختصاص"],
+            ["طباعة", "كباعة"],
+            ["لابن", "لإبن"],
+            ["لانتهاء", "لإنتهاء"],
+            ["لأنَّني", "لانني"],
+            ["لأنَّه", "لانه"],
+            ["لأنَّها", "لانها"],
+            ["الدُّسوقيّ", "لدسوقي"],
+            ["للاحتيال", "للإحتيال"],
+            ["للاستناد", "للإستناد"],
+            ["للاطِّلاع", "للإطلاع"],
+            ["للمنـزل", "للمنزل"],
+            ["لم يبقَ", "لم يبقى"],
+            ["لـما", "لما"],
+            ["لـمُهرِّبي", "لمهربي"],
+            ["ما لديَّ", "ما لدى"],
+            ["ما لديَّ.", "ما لدي"],
+            ["ما لديَّ", "مالدي"],
+            ["متعدِّدة", "متعدده"],
+            ["معزِّي", "معزى"],
+            ["مع", "مغ"],
+            ["منـزلًا", "منزلا"],
+            ["مؤسَّسة", "موسسة"],
+            ["و بما", "وبما"],
+            ["و قدره", "وقدره"],
+            ["و قدرها", "وقدرها"],
+            ["و لا", "ولا"],
+            ["و ليس", "وليس"],
+            ["و هو", "وهو"],
+            ["و هي", "وهي"],
+            ["يدَّعى", "يدعي"],
+            ["يـُمثِّله", "يمثله"],
+            ["يـُمثِّلها", "يمثلها"],
+            ["يـُمثِّلهم", "يمثلهم"],
+            ["يـُمثِّلهما", "يمثلهما"]
+        ];
 
-        // ترتيب التصحيحات حسب الطول (الأطول أولاً)
         corrections.sort((a, b) => b[1].length - a[1].length);
 
-        // عداد الأحرف
         document.getElementById('inputText').addEventListener('input', function() {
             const text = this.value;
             const charCount = text.replace(/\s/g, '').length;
@@ -685,17 +676,15 @@ const corrections = [
 
         async function processText() {
             const inputText = document.getElementById('inputText').value;
-            
+
             if (!inputText.trim()) {
                 showToast('⚠️ الرجاء إدخال نص للمعالجة');
                 return;
             }
 
-            // إظهار مؤشر التحميل
             document.getElementById('loading').classList.add('show');
             document.getElementById('processBtn').disabled = true;
 
-            // استخدام setTimeout للسماح بتحديث الواجهة
             setTimeout(() => {
                 let text = inputText;
                 let spacesCount = 0;
@@ -705,63 +694,59 @@ const corrections = [
                 let emptyLinesCount = 0;
                 let correctionsCount = 0;
 
-                // 1. استبدال المسافتين بمسافة واحدة
                 const beforeSpaces = text;
-                text = text.replace(/  +/g, ' ');
-                spacesCount = (beforeSpaces.match(/  +/g) || []).length;
+                text = text.replace(/ +/g, ' ');
+                spacesCount = (beforeSpaces.match(/ +/g) || []).length;
 
-                // 2. استبدال " :" ب ": "
                 const beforeColons = text;
                 text = text.replace(/ :/g, ': ');
                 colonsCount = (beforeColons.match(/ :/g) || []).length;
 
-                // 3. حذف الأسطر الفارغة
                 const beforeEmptyLines = text;
                 text = text.replace(/\n\s*\n/g, '\n');
                 emptyLinesCount = (beforeEmptyLines.match(/\n\s*\n/g) || []).length;
 
-
-                // 4. دمج الجلسات
                 const sessionMergePatterns = [
-    // 1- رفعت الجلسة. افتتحت الجلسة وفيها
-    {
-        pattern: /رفعت?\s+الجلسة\.\s*افتتحت\s+الجلسة\s+وفيها/g,
-        replacement: 'وفي جلسة أخرى'
-    },
-    // 2- رفع الجلسة في هذه الجلسة
-    {
-        pattern: /رفع\s+الجلسة\s+في\s+هذه\s+الجلسة/g,
-        replacement: 'وفي جلسة أخرى'
-    },
-    // 3- رفع الجلسة وفي هذه الجلسة
-    {
-        pattern: /رفع\s+الجلسة\s+وفي\s+هذه\s+الجلسة/g,
-        replacement: 'وفي جلسة أخرى'
-    },
-    // 4- وكان ختامها الساعة XX:XX صباحاً/مساءً. وفي هذه الجلسة
-    {
-        pattern: /وكان\s+ختامها\s+الساعة\s+\d{1,2}:\d{2}\s+(?:صباحاً|مساءً)\.\s*وفي\s+هذه\s+الجلسة/g,
-        replacement: 'وفي جلسة أخرى'
-    },
-    // 5- رفع الجلسة للنطق بالحكم. افتتحت الجلسة وفيها
-    {
-        pattern: /رفع\s+الجلسة\s+للنطق\s+بالحكم\.\s*افتتحت\s+الجلسة\s+وفيها/g,
-        replacement: 'رفع الجلسة للنطق بالحكم. وفي جلسة أخرى'
-    }
+  {
+    pattern: /رفعت?\s+الجلسة\.\s*افتتحت\s+الجلسة\s+وفيها/g,
+    replacement: 'وفي جلسة أخرى'
+  },
+  {
+    pattern: /رفع\s+الجلسة\s+في\s+هذه\s+الجلسة/g,
+    replacement: 'وفي جلسة أخرى'
+  },
+  {
+    pattern: /رفع\s+الجلسة\s+وفي\s+هذه\s+الجلسة/g,
+    replacement: 'وفي جلسة أخرى'
+  },
+  {
+    pattern: /وكان\s+ختامها\s+الساعة\s+\d{1,2}:\d{2}\s+(?:صباحاً|مساءً)\.\s*وفي\s+هذه\s+الجلسة/g,
+    replacement: 'وفي جلسة أخرى'
+  },
+  {
+    pattern: /رفع\s+الجلسة\s+للنطق\s+بالحكم\.\s*افتتحت\s+الجلسة\s+وفيها/g,
+    replacement: 'رفع الجلسة للنطق بالحكم. وفي جلسة أخرى'
+  },
+  // أضف الحالات اللي كان النمط القديم يغطيها كأنماط محددة
+  {
+    pattern: /رفعت?\s+الجلسة\s+وبالله\s+التوفيق[^.]*\.\s*حضرت?\s/g,
+    replacement: 'وفي جلسة أخرى حضر '
+  },
+  {
+    pattern: /رفعت?\s+الجلسة[^.]*ختامها[^.]*\.\s*حضرت?\s/g,
+    replacement: 'وفي جلسة أخرى حضر '
+  }
 ];
 
-// تطبيق أنماط دمج الجلسات
-sessionMergePatterns.forEach(({pattern, replacement}) => {
-    const matches = text.match(pattern);
-    if (matches) {
-        sessionsCount += matches.length;
-        text = text.replace(pattern, replacement);
-    }
-});
+                sessionMergePatterns.forEach(({pattern, replacement}) => {
+                    const matches = text.match(pattern);
+                    if (matches) {
+                        sessionsCount += matches.length;
+                        text = text.replace(pattern, replacement);
+                    }
+                });
 
-// 5. التصحيح اللغوي (إذا كان مفعّلاً)
                 let correctedWords = [];
-
                 if (document.getElementById('enableCorrection').checked) {
                     corrections.forEach(([correct, wrong]) => {
                         const escapedWrong = wrong.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -775,11 +760,9 @@ sessionMergePatterns.forEach(({pattern, replacement}) => {
                     });
                 }
 
-                // النمط القديم لدمج الجلسات
                 const sessionRegex = /(رفعت?\s+الجلسة)([\s\S]*?)(حضرت?(?:\s|$))/g;
                 let match;
                 const sessionMatches = [];
-                
                 while ((match = sessionRegex.exec(text)) !== null) {
                     sessionMatches.push({
                         fullMatch: match[0],
@@ -794,12 +777,12 @@ sessionMergePatterns.forEach(({pattern, replacement}) => {
                     const m = sessionMatches[i];
                     const middleText = m.middle;
                     const wordCount = middleText.trim().split(/\s+/).length;
-                    
+
                     if (wordCount < 17) {
                         const hasTawfiq = middleText.includes('وبالله التوفيق');
                         const hasKhitam = middleText.includes('ختامها');
                         const hasDirasa = middleText.includes('للدراسة');
-                        
+
                         if (hasTawfiq || hasKhitam || hasDirasa) {
                             const replacement = m.start + ' وفي جلسة أخرى ' + m.end;
                             text = text.substring(0, m.index) + replacement + text.substring(m.index + m.fullMatch.length);
@@ -808,11 +791,9 @@ sessionMergePatterns.forEach(({pattern, replacement}) => {
                     }
                 }
 
-                // 6. حذف جلسات الشطب
                 const shatbPattern = /لذا فقد قررت الدَّائرة شطب الدعوى/g;
                 let shatbMatch;
                 const shatbPositions = [];
-                
                 while ((shatbMatch = shatbPattern.exec(text)) !== null) {
                     shatbPositions.push(shatbMatch.index);
                 }
@@ -820,15 +801,14 @@ sessionMergePatterns.forEach(({pattern, replacement}) => {
                 for (let i = shatbPositions.length - 1; i >= 0; i--) {
                     const shatbPos = shatbPositions[i];
                     const textBeforeShatb = text.substring(0, shatbPos);
-                    
+
                     const startPatterns = [
                         /افتتحت\s+الجلسة/g,
                         /فلدي\s+أنا/g,
                         /لدي\s+أنا/g
                     ];
-                    
+
                     let lastStartPos = -1;
-                    
                     for (const pattern of startPatterns) {
                         let startMatch;
                         while ((startMatch = pattern.exec(textBeforeShatb)) !== null) {
@@ -837,12 +817,12 @@ sessionMergePatterns.forEach(({pattern, replacement}) => {
                             }
                         }
                     }
-                    
+
                     if (lastStartPos !== -1) {
                         const textAfterShatb = text.substring(shatbPos);
                         const endPattern = /وصحبه وسلم/;
                         const endMatch = endPattern.exec(textAfterShatb);
-                        
+
                         if (endMatch) {
                             const endPos = shatbPos + endMatch.index + endMatch[0].length;
                             text = text.substring(0, lastStartPos) + text.substring(endPos);
@@ -851,10 +831,8 @@ sessionMergePatterns.forEach(({pattern, replacement}) => {
                     }
                 }
 
-                // عرض النتائج
                 processedResult = text;
 
-                // عرض النص الأصلي مع تمييز الكلمات الخاطئة بخط أحمر تحتها
                 let originalHighlighted = inputText;
                 let processedHighlighted = text;
 
@@ -863,34 +841,30 @@ sessionMergePatterns.forEach(({pattern, replacement}) => {
                     const escapedCorrect = correct.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                     const wrongRegex = new RegExp('(^|[^\\u0600-\\u06FF])' + escapedWrong + '(?![\\u0600-\\u06FF])', 'g');
                     const correctRegex = new RegExp('(^|[^\\u0600-\\u06FF])' + escapedCorrect + '(?![\\u0600-\\u06FF])', 'g');
-                    
                     originalHighlighted = originalHighlighted.replace(wrongRegex, '$1<span class="corrected-word">' + wrong + '</span>');
                     processedHighlighted = processedHighlighted.replace(correctRegex, '$1<span class="corrected-word">' + correct + '</span>');
                 });
 
                 document.getElementById('originalText').innerHTML = originalHighlighted;
                 document.getElementById('processedText').innerHTML = processedHighlighted;
-                
-                // حساب عدد الأحرف
+
                 const originalCharCount = countChars(inputText);
                 const processedCharCount = countChars(text);
-                
                 document.getElementById('originalCharCount').textContent = `عدد الأحرف: ${originalCharCount.toLocaleString('ar-SA')}`;
                 document.getElementById('processedCharCount').textContent = `عدد الأحرف: ${processedCharCount.toLocaleString('ar-SA')}`;
-                
+
                 document.getElementById('spacesCount').textContent = spacesCount;
                 document.getElementById('colonsCount').textContent = colonsCount;
                 document.getElementById('sessionsCount').textContent = sessionsCount;
                 document.getElementById('deletedCount').textContent = deletedCount;
                 document.getElementById('emptyLinesCount').textContent = emptyLinesCount;
                 document.getElementById('correctionsCount').textContent = correctionsCount;
-                
+
                 document.getElementById('stats').classList.add('show');
                 document.getElementById('comparison').style.display = 'grid';
                 document.getElementById('copyBtn').disabled = false;
                 document.getElementById('downloadBtn').disabled = false;
 
-                // إخفاء مؤشر التحميل
                 document.getElementById('loading').classList.remove('show');
                 document.getElementById('processBtn').disabled = false;
 
@@ -911,16 +885,13 @@ sessionMergePatterns.forEach(({pattern, replacement}) => {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            
             const now = new Date();
             const filename = `صك_معالج_${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}.txt`;
             a.download = filename;
-            
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            
             showToast('✅ تم تحميل الملف بنجاح!');
         }
     </script>
