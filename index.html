@@ -682,9 +682,11 @@
                 return;
             }
 
+            // إظهار مؤشر التحميل
             document.getElementById('loading').classList.add('show');
             document.getElementById('processBtn').disabled = true;
 
+            // استخدام setTimeout للسماح بتحديث الواجهة
             setTimeout(() => {
                 let text = inputText;
                 let spacesCount = 0;
@@ -694,14 +696,17 @@
                 let emptyLinesCount = 0;
                 let correctionsCount = 0;
 
+                // 1. استبدال المسافتين بمسافة واحدة
                 const beforeSpaces = text;
-                text = text.replace(/ +/g, ' ');
-                spacesCount = (beforeSpaces.match(/ +/g) || []).length;
+                text = text.replace(/  +/g, ' ');
+                spacesCount = (beforeSpaces.match(/  +/g) || []).length;
 
+                // 2. استبدال " :" ب ": "
                 const beforeColons = text;
                 text = text.replace(/ :/g, ': ');
                 colonsCount = (beforeColons.match(/ :/g) || []).length;
 
+                // 3. حذف الأسطر الفارغة
                 const beforeEmptyLines = text;
                 text = text.replace(/\n\s*\n/g, '\n');
                 emptyLinesCount = (beforeEmptyLines.match(/\n\s*\n/g) || []).length;
@@ -727,7 +732,6 @@
     pattern: /رفع\s+الجلسة\s+للنطق\s+بالحكم\.\s*افتتحت\s+الجلسة\s+وفيها/g,
     replacement: 'رفع الجلسة للنطق بالحكم. وفي جلسة أخرى'
   },
-  // أضف الحالات اللي كان النمط القديم يغطيها كأنماط محددة
   {
     pattern: /رفعت?\s+الجلسة\s+وبالله\s+التوفيق[^.]*\.\s*حضرت?\s/g,
     replacement: 'وفي جلسة أخرى حضر '
@@ -746,7 +750,9 @@
                     }
                 });
 
+// 5. التصحيح اللغوي (إذا كان مفعّلاً)
                 let correctedWords = [];
+
                 if (document.getElementById('enableCorrection').checked) {
                     corrections.forEach(([correct, wrong]) => {
                         const escapedWrong = wrong.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -760,6 +766,7 @@
                     });
                 }
 
+                // النمط القديم (ريقاكس) لدمج الجلسات
                 const sessionRegex = /(رفعت?\s+الجلسة)([\s\S]*?)(حضرت?(?:\s|$))/g;
                 let match;
                 const sessionMatches = [];
@@ -791,9 +798,11 @@
                     }
                 }
 
+                // 6. حذف جلسات الشطب
                 const shatbPattern = /لذا فقد قررت الدَّائرة شطب الدعوى/g;
                 let shatbMatch;
                 const shatbPositions = [];
+                
                 while ((shatbMatch = shatbPattern.exec(text)) !== null) {
                     shatbPositions.push(shatbMatch.index);
                 }
@@ -801,7 +810,7 @@
                 for (let i = shatbPositions.length - 1; i >= 0; i--) {
                     const shatbPos = shatbPositions[i];
                     const textBeforeShatb = text.substring(0, shatbPos);
-
+                    
                     const startPatterns = [
                         /افتتحت\s+الجلسة/g,
                         /فلدي\s+أنا/g,
@@ -809,6 +818,7 @@
                     ];
 
                     let lastStartPos = -1;
+                    
                     for (const pattern of startPatterns) {
                         let startMatch;
                         while ((startMatch = pattern.exec(textBeforeShatb)) !== null) {
@@ -817,12 +827,12 @@
                             }
                         }
                     }
-
+                    
                     if (lastStartPos !== -1) {
                         const textAfterShatb = text.substring(shatbPos);
                         const endPattern = /وصحبه وسلم/;
                         const endMatch = endPattern.exec(textAfterShatb);
-
+                        
                         if (endMatch) {
                             const endPos = shatbPos + endMatch.index + endMatch[0].length;
                             text = text.substring(0, lastStartPos) + text.substring(endPos);
@@ -831,8 +841,10 @@
                     }
                 }
 
+                // عرض النتائج
                 processedResult = text;
 
+                // عرض النص الأصلي مع تمييز الكلمات الخاطئة بخط أحمر تحتها
                 let originalHighlighted = inputText;
                 let processedHighlighted = text;
 
@@ -841,6 +853,7 @@
                     const escapedCorrect = correct.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                     const wrongRegex = new RegExp('(^|[^\\u0600-\\u06FF])' + escapedWrong + '(?![\\u0600-\\u06FF])', 'g');
                     const correctRegex = new RegExp('(^|[^\\u0600-\\u06FF])' + escapedCorrect + '(?![\\u0600-\\u06FF])', 'g');
+                    
                     originalHighlighted = originalHighlighted.replace(wrongRegex, '$1<span class="corrected-word">' + wrong + '</span>');
                     processedHighlighted = processedHighlighted.replace(correctRegex, '$1<span class="corrected-word">' + correct + '</span>');
                 });
@@ -848,23 +861,26 @@
                 document.getElementById('originalText').innerHTML = originalHighlighted;
                 document.getElementById('processedText').innerHTML = processedHighlighted;
 
+                // حساب عدد الأحرف
                 const originalCharCount = countChars(inputText);
                 const processedCharCount = countChars(text);
+                
                 document.getElementById('originalCharCount').textContent = `عدد الأحرف: ${originalCharCount.toLocaleString('ar-SA')}`;
                 document.getElementById('processedCharCount').textContent = `عدد الأحرف: ${processedCharCount.toLocaleString('ar-SA')}`;
-
+                
                 document.getElementById('spacesCount').textContent = spacesCount;
                 document.getElementById('colonsCount').textContent = colonsCount;
                 document.getElementById('sessionsCount').textContent = sessionsCount;
                 document.getElementById('deletedCount').textContent = deletedCount;
                 document.getElementById('emptyLinesCount').textContent = emptyLinesCount;
                 document.getElementById('correctionsCount').textContent = correctionsCount;
-
+                
                 document.getElementById('stats').classList.add('show');
                 document.getElementById('comparison').style.display = 'grid';
                 document.getElementById('copyBtn').disabled = false;
                 document.getElementById('downloadBtn').disabled = false;
 
+                // إخفاء مؤشر التحميل
                 document.getElementById('loading').classList.remove('show');
                 document.getElementById('processBtn').disabled = false;
 
@@ -885,13 +901,16 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
+            
             const now = new Date();
             const filename = `صك_معالج_${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}.txt`;
             a.download = filename;
+            
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+            
             showToast('✅ تم تحميل الملف بنجاح!');
         }
     </script>
