@@ -711,6 +711,7 @@
                 text = text.replace(/\n\s*\n/g, '\n');
                 emptyLinesCount = (beforeEmptyLines.match(/\n\s*\n/g) || []).length;
 
+                // 4. دمج الجلسات
                 const sessionMergePatterns = [
   {
     pattern: /رفعت?\s+الجلسة\.\s*افتتحت\s+الجلسة\s+وفيها/g,
