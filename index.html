@@ -61,6 +61,33 @@
             font-size: 16px;
         }
 
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .label-row label {
+            margin-bottom: 0;
+        }
+
+        .btn-file {
+            background: transparent;
+            border: 2px solid #E0D6C4;
+            color: #6B4423;
+            padding: 6px 14px;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+
+        .btn-file:hover {
+            border-color: #8B5A2B;
+            background: #FAF6EF;
+        }
+
         textarea {
             width: 100%;
             min-height: 200px;
@@ -161,14 +188,14 @@
             transform: translateY(-2px);
         }
 
-        .btn-copy, .btn-download {
+        .btn-copy, .btn-download, .btn-paste {
             background: #EDE4D3;
             color: #3D2817;
             flex: 0.5;
             min-width: 120px;
         }
 
-        .btn-copy:hover, .btn-download:hover {
+        .btn-copy:hover, .btn-download:hover, .btn-paste:hover {
             background: #DDD0B8;
             transform: translateY(-2px);
         }
@@ -367,8 +394,12 @@
 
         <div class="content">
             <div class="input-section">
-                <label for="inputText"> أدخل نص الضبوط:</label>
-                <textarea id="inputText" placeholder="الصق النص هنا..."></textarea>
+                <div class="label-row">
+                    <label for="inputText"> أدخل نص الضبوط:</label>
+                    <button class="btn-file" onclick="document.getElementById('fileInput').click()">📂 فتح ملف نصي</button>
+                    <input type="file" id="fileInput" accept=".txt,text/plain" style="display: none;">
+                </div>
+                <textarea id="inputText" placeholder="الصق النص هنا... (Ctrl+Enter للمعالجة السريعة)"></textarea>
                 <div class="char-counter" id="inputCharCount">عدد الأحرف: 0</div>
             </div>
 
@@ -381,6 +412,7 @@
 
             <div class="button-group">
                 <button class="btn-process" onclick="processText()" id="processBtn"> معالجة النص</button>
+                <button class="btn-paste" onclick="pasteAndProcess()">📥 لصق ومعالجة</button>
                 <button class="btn-clear" id="clearBtn" onclick="clearText()">🧹 محو النص</button>
                 <button class="btn-copy" id="copyBtn" onclick="copyResult()" disabled>📋 نسخ النتيجة</button>
                 <button class="btn-download" id="downloadBtn" onclick="downloadResult()" disabled>💾 تحميل كملف</button>
@@ -531,7 +563,10 @@
             ["الأولاد", "الاولاد"],
             ["الإيداع", "الايداع"],
             ["التَّعزيز", "التعزير"],
-            ["الاستئناف", "التمييز"],
+            ["محكمة الاستئناف", "محكمة التمييز"],
+            ["لمحكمة الاستئناف", "لمحكمة التمييز"],
+            ["بمحكمة الاستئناف", "بمحكمة التمييز"],
+            ["ومحكمة الاستئناف", "ومحكمة التمييز"],
             ["الضَّبط", "الظبط"],
             ["المتعدِّدة", "المتعدده"],
             ["المتوفَّـى", "المتوفى"],
@@ -668,11 +703,86 @@
 
         corrections.sort((a, b) => b[1].length - a[1].length);
 
+        const DRAFT_KEY = 'sakk-processor-draft';
+        let draftTimer;
+
         document.getElementById('inputText').addEventListener('input', function() {
             const text = this.value;
             const charCount = text.replace(/\s/g, '').length;
             document.getElementById('inputCharCount').textContent = `عدد الأحرف: ${charCount.toLocaleString('ar-SA')}`;
+
+            // حفظ تلقائي للمسودة حتى لا يضيع النص عند إغلاق الصفحة سهواً
+            clearTimeout(draftTimer);
+            draftTimer = setTimeout(() => {
+                try {
+                    if (text) {
+                        localStorage.setItem(DRAFT_KEY, text);
+                    } else {
+                        localStorage.removeItem(DRAFT_KEY);
+                    }
+                } catch (e) {}
+            }, 500);
         });
+
+        // اختصار Ctrl+Enter لمعالجة النص مباشرة من مربع الإدخال
+        document.getElementById('inputText').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                processText();
+            }
+        });
+
+        // فتح ملف نصي من الجهاز
+        document.getElementById('fileInput').addEventListener('change', function() {
+            const file = this.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                const input = document.getElementById('inputText');
+                input.value = reader.result;
+                input.dispatchEvent(new Event('input'));
+                input.focus();
+                showToast('📂 تم فتح الملف: ' + file.name);
+            };
+            reader.onerror = () => showToast('❌ تعذر قراءة الملف');
+            reader.readAsText(file, 'utf-8');
+            this.value = '';
+        });
+
+        // استرجاع المسودة المحفوظة عند فتح الصفحة
+        (function restoreDraft() {
+            try {
+                const draft = localStorage.getItem(DRAFT_KEY);
+                if (draft) {
+                    const input = document.getElementById('inputText');
+                    input.value = draft;
+                    const charCount = draft.replace(/\s/g, '').length;
+                    document.getElementById('inputCharCount').textContent = `عدد الأحرف: ${charCount.toLocaleString('ar-SA')}`;
+                    showToast('📄 تم استرجاع آخر نص محفوظ تلقائياً');
+                }
+            } catch (e) {}
+        })();
+
+        // لصق نص الحافظة ومعالجته بضغطة واحدة
+        async function pasteAndProcess() {
+            if (!navigator.clipboard || !navigator.clipboard.readText || !window.isSecureContext) {
+                showToast('⚠️ المتصفح لا يسمح باللصق التلقائي هنا، الصق النص يدوياً (Ctrl+V)');
+                return;
+            }
+            try {
+                const clipText = await navigator.clipboard.readText();
+                if (!clipText.trim()) {
+                    showToast('⚠️ الحافظة فارغة');
+                    return;
+                }
+                const input = document.getElementById('inputText');
+                input.value = clipText;
+                input.dispatchEvent(new Event('input'));
+                processText();
+            } catch (e) {
+                showToast('⚠️ تعذر الوصول إلى الحافظة، الصق النص يدوياً (Ctrl+V)');
+            }
+        }
 
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -685,6 +795,15 @@
 
         function countChars(text) {
             return text.replace(/\s/g, '').length;
+        }
+
+        // تهريب رموز HTML حتى لا تنكسر الواجهة إذا احتوى النص على < أو > أو وسوم
+        function escapeHtml(str) {
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
         }
 
         async function processText() {
@@ -701,6 +820,7 @@
 
             // استخدام setTimeout للسماح بتحديث الواجهة
             setTimeout(() => {
+                try {
                 let text = inputText;
                 let spacesCount = 0;
                 let colonsCount = 0;
@@ -866,6 +986,9 @@
                     }
                 }
 
+                // إزالة ازدواج الواو الناتج عن الدمج (مثل: «ورفعت الجلسة. افتتحت الجلسة» → «ووفي جلسة أخرى»)
+                text = text.replace(/ووفي\s+جلسة\s+أخرى/g, 'وفي جلسة أخرى');
+
                 // 6. حذف جلسات الشطب
                 const shatbPattern = /لذا\s+(?:فقد\s+)?قررت\s+الد(?:َّ)?ائرة\s+شطب\s+الدعوى/g;
                 let shatbMatch;
@@ -914,8 +1037,8 @@
                 processedResult = text;
 
                 // عرض النص الأصلي مع تمييز الكلمات الخاطئة بخط أحمر تحتها
-                let originalHighlighted = inputText;
-                let processedHighlighted = text;
+                let originalHighlighted = escapeHtml(inputText);
+                let processedHighlighted = escapeHtml(text);
 
                 correctedWords.forEach(({wrong, correct}) => {
                     const escapedWrong = wrong.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -937,23 +1060,26 @@
                 document.getElementById('originalCharCount').textContent = `عدد الأحرف: ${originalCharCount.toLocaleString('ar-SA')}`;
                 document.getElementById('processedCharCount').textContent = `عدد الأحرف: ${processedCharCount.toLocaleString('ar-SA')}`;
                 
-                document.getElementById('spacesCount').textContent = spacesCount;
-                document.getElementById('colonsCount').textContent = colonsCount;
-                document.getElementById('sessionsCount').textContent = sessionsCount;
-                document.getElementById('deletedCount').textContent = deletedCount;
-                document.getElementById('emptyLinesCount').textContent = emptyLinesCount;
-                document.getElementById('correctionsCount').textContent = correctionsCount;
+                document.getElementById('spacesCount').textContent = spacesCount.toLocaleString('ar-SA');
+                document.getElementById('colonsCount').textContent = colonsCount.toLocaleString('ar-SA');
+                document.getElementById('sessionsCount').textContent = sessionsCount.toLocaleString('ar-SA');
+                document.getElementById('deletedCount').textContent = deletedCount.toLocaleString('ar-SA');
+                document.getElementById('emptyLinesCount').textContent = emptyLinesCount.toLocaleString('ar-SA');
+                document.getElementById('correctionsCount').textContent = correctionsCount.toLocaleString('ar-SA');
                 
                 document.getElementById('stats').classList.add('show');
                 document.getElementById('comparison').style.display = 'grid';
                 document.getElementById('copyBtn').disabled = false;
                 document.getElementById('downloadBtn').disabled = false;
 
-                // إخفاء مؤشر التحميل
-                document.getElementById('loading').classList.remove('show');
-                document.getElementById('processBtn').disabled = false;
-
                 showToast('✅ تمت المعالجة بنجاح!');
+                } catch (err) {
+                    showToast('❌ حدث خطأ غير متوقع أثناء المعالجة، يرجى المحاولة مرة أخرى');
+                } finally {
+                    // إخفاء مؤشر التحميل وإعادة تفعيل الزر حتى في حال حدوث خطأ
+                    document.getElementById('loading').classList.remove('show');
+                    document.getElementById('processBtn').disabled = false;
+                }
             }, 100);
         }
 
@@ -967,6 +1093,9 @@
 
             input.value = '';
             processedResult = '';
+            try {
+                localStorage.removeItem(DRAFT_KEY);
+            } catch (e) {}
             document.getElementById('inputCharCount').textContent = `عدد الأحرف: ${(0).toLocaleString('ar-SA')}`;
             document.getElementById('originalText').innerHTML = '';
             document.getElementById('processedText').innerHTML = '';
@@ -979,12 +1108,34 @@
             showToast('🧹 تم محو النص، يمكنك لصق الضبط الجديد');
         }
 
+        // طريقة نسخ احتياطية للمتصفحات التي لا تدعم Clipboard API (مثل فتح الملف محلياً)
+        function fallbackCopy(textToCopy) {
+            const ta = document.createElement('textarea');
+            ta.value = textToCopy;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            let ok = false;
+            try {
+                ok = document.execCommand('copy');
+            } catch (e) {
+                ok = false;
+            }
+            document.body.removeChild(ta);
+            showToast(ok ? '✅ تم نسخ النتيجة بنجاح!' : '❌ فشل النسخ، يرجى المحاولة مرة أخرى');
+        }
+
         function copyResult() {
-            navigator.clipboard.writeText(processedResult).then(() => {
-                showToast('✅ تم نسخ النتيجة بنجاح!');
-            }).catch(() => {
-                showToast('❌ فشل النسخ، يرجى المحاولة مرة أخرى');
-            });
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(processedResult).then(() => {
+                    showToast('✅ تم نسخ النتيجة بنجاح!');
+                }).catch(() => {
+                    fallbackCopy(processedResult);
+                });
+            } else {
+                fallbackCopy(processedResult);
+            }
         }
 
         function downloadResult() {
