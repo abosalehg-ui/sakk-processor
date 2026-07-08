@@ -333,6 +333,33 @@
             text-underline-offset: 3px;
         }
 
+        .merged-session {
+            background: #DCEFD8;
+            border-radius: 4px;
+            padding: 0 3px;
+        }
+
+        .deleted-session {
+            background: #F9E3DF;
+            color: #A93226;
+            border-radius: 4px;
+            padding: 0 4px;
+            font-weight: 600;
+        }
+
+        .highlight-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 12.5px;
+            color: #5A4632;
+            margin-bottom: 12px;
+        }
+
+        .highlight-legend span span {
+            margin-left: 4px;
+        }
+
         .toast {
             position: fixed;
             top: 20px;
@@ -466,6 +493,11 @@
                 </div>
                 <div class="text-box">
                     <h3>✨ النص المعدّل</h3>
+                    <div class="highlight-legend">
+                        <span><span class="merged-session">نص</span> موضع دمج جلسات</span>
+                        <span><span class="deleted-session">⟦ ⟧</span> موضع حذف جلسة شطب</span>
+                        <span><span class="corrected-word">نص</span> كلمة مصححة</span>
+                    </div>
                     <div class="text-content" id="processedText"></div>
                     <div class="char-counter" id="processedCharCount">عدد الأحرف: 0</div>
                 </div>
@@ -477,6 +509,12 @@
 
     <script>
         let processedResult = '';
+
+        // علامات داخلية مؤقتة لتتبع مواضع الدمج والحذف، تُحوَّل إلى تظليل في العرض وتُحذف من النتيجة النهائية
+        const MERGE_START = '\u0001';
+        const MERGE_END = '\u0002';
+        const DELETE_MARK = '\u0003';
+        const MERGED_PHRASE = MERGE_START + 'وفي جلسة أخرى' + MERGE_END;
 
         const corrections = [
             ["ادَّعت", "أدعت"],
@@ -821,7 +859,7 @@
             // استخدام setTimeout للسماح بتحديث الواجهة
             setTimeout(() => {
                 try {
-                let text = inputText;
+                let text = inputText.replace(/[\u0001-\u0003]/g, '');
                 let spacesCount = 0;
                 let colonsCount = 0;
                 let sessionsCount = 0;
@@ -934,7 +972,7 @@
                     const matches = text.match(pattern);
                     if (matches) {
                         sessionsCount += matches.length;
-                        text = text.replace(pattern, replacement);
+                        text = text.replace(pattern, replacement.replace('وفي جلسة أخرى', MERGED_PHRASE));
                     }
                 });
 
@@ -979,7 +1017,7 @@
                         const hasDirasa = middleText.includes('للدراسة');
 
                         if (hasTawfiq || hasKhitam || hasDirasa) {
-                            const replacement = m.start + ' وفي جلسة أخرى ' + m.end;
+                            const replacement = m.start + ' ' + MERGED_PHRASE + ' ' + m.end;
                             text = text.substring(0, m.index) + replacement + text.substring(m.index + m.fullMatch.length);
                             sessionsCount++;
                         }
@@ -987,6 +1025,7 @@
                 }
 
                 // إزالة ازدواج الواو الناتج عن الدمج (مثل: «ورفعت الجلسة. افتتحت الجلسة» → «ووفي جلسة أخرى»)
+                text = text.replace(new RegExp('و' + MERGE_START + 'وفي جلسة أخرى', 'g'), MERGE_START + 'وفي جلسة أخرى');
                 text = text.replace(/ووفي\s+جلسة\s+أخرى/g, 'وفي جلسة أخرى');
 
                 // 6. حذف جلسات الشطب
@@ -1027,14 +1066,14 @@
                         
                         if (endMatch) {
                             const endPos = shatbPos + endMatch.index + endMatch[0].length;
-                            text = text.substring(0, lastStartPos) + text.substring(endPos);
+                            text = text.substring(0, lastStartPos) + DELETE_MARK + text.substring(endPos);
                             deletedCount++;
                         }
                     }
                 }
 
-                // عرض النتائج
-                processedResult = text;
+                // عرض النتائج (تُحذف علامات التتبع الداخلية من النتيجة النهائية)
+                processedResult = text.replace(/[\u0001-\u0003]/g, '');
 
                 // عرض النص الأصلي مع تمييز الكلمات الخاطئة بخط أحمر تحتها
                 let originalHighlighted = escapeHtml(inputText);
@@ -1050,12 +1089,18 @@
                     processedHighlighted = processedHighlighted.replace(correctRegex, '$1<span class="corrected-word">' + correct + '</span>');
                 });
 
+                // تحويل علامات التتبع إلى تظليل مرئي لمواضع الدمج والحذف في النص المعدل
+                processedHighlighted = processedHighlighted
+                    .replace(/\u0001/g, '<span class="merged-session" title="موضع دمج جلسات">')
+                    .replace(/\u0002/g, '</span>')
+                    .replace(/\u0003/g, '<span class="deleted-session" title="حُذفت هنا جلسة شطب">⟦ حُذفت جلسة شطب ⟧</span>');
+
                 document.getElementById('originalText').innerHTML = originalHighlighted;
                 document.getElementById('processedText').innerHTML = processedHighlighted;
 
                 // حساب عدد الأحرف
                 const originalCharCount = countChars(inputText);
-                const processedCharCount = countChars(text);
+                const processedCharCount = countChars(processedResult);
                 
                 document.getElementById('originalCharCount').textContent = `عدد الأحرف: ${originalCharCount.toLocaleString('ar-SA')}`;
                 document.getElementById('processedCharCount').textContent = `عدد الأحرف: ${processedCharCount.toLocaleString('ar-SA')}`;
