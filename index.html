@@ -149,6 +149,18 @@
             cursor: not-allowed;
         }
 
+        .btn-clear {
+            background: #F5E0D8;
+            color: #8B3A2B;
+            flex: 0.5;
+            min-width: 120px;
+        }
+
+        .btn-clear:hover {
+            background: #EACCBF;
+            transform: translateY(-2px);
+        }
+
         .btn-copy, .btn-download {
             background: #EDE4D3;
             color: #3D2817;
@@ -369,6 +381,7 @@
 
             <div class="button-group">
                 <button class="btn-process" onclick="processText()" id="processBtn"> معالجة النص</button>
+                <button class="btn-clear" id="clearBtn" onclick="clearText()">🧹 محو النص</button>
                 <button class="btn-copy" id="copyBtn" onclick="copyResult()" disabled>📋 نسخ النتيجة</button>
                 <button class="btn-download" id="downloadBtn" onclick="downloadResult()" disabled>💾 تحميل كملف</button>
             </div>
@@ -942,6 +955,28 @@
 
                 showToast('✅ تمت المعالجة بنجاح!');
             }, 100);
+        }
+
+        function clearText() {
+            const input = document.getElementById('inputText');
+
+            if (!input.value && !processedResult) {
+                showToast('ℹ️ لا يوجد نص لمحوه');
+                return;
+            }
+
+            input.value = '';
+            processedResult = '';
+            document.getElementById('inputCharCount').textContent = `عدد الأحرف: ${(0).toLocaleString('ar-SA')}`;
+            document.getElementById('originalText').innerHTML = '';
+            document.getElementById('processedText').innerHTML = '';
+            document.getElementById('stats').classList.remove('show');
+            document.getElementById('comparison').style.display = 'none';
+            document.getElementById('copyBtn').disabled = true;
+            document.getElementById('downloadBtn').disabled = true;
+            input.focus();
+
+            showToast('🧹 تم محو النص، يمكنك لصق الضبط الجديد');
         }
 
         function copyResult() {
