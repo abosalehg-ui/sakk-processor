@@ -83,9 +83,20 @@
             border-radius: 8px;
         }
 
-        .btn-file:hover {
+        .btn-file:hover:not(:disabled) {
             border-color: #8B5A2B;
             background: #FAF6EF;
+        }
+
+        .btn-file:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         textarea {
@@ -188,19 +199,19 @@
             transform: translateY(-2px);
         }
 
-        .btn-copy, .btn-download, .btn-paste {
+        .btn-copy {
             background: #EDE4D3;
             color: #3D2817;
             flex: 0.5;
             min-width: 120px;
         }
 
-        .btn-copy:hover, .btn-download:hover, .btn-paste:hover {
+        .btn-copy:hover {
             background: #DDD0B8;
             transform: translateY(-2px);
         }
 
-        .btn-copy:disabled, .btn-download:disabled {
+        .btn-copy:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
@@ -423,7 +434,10 @@
             <div class="input-section">
                 <div class="label-row">
                     <label for="inputText"> أدخل نص الضبوط:</label>
-                    <button class="btn-file" onclick="document.getElementById('fileInput').click()">📂 فتح ملف نصي</button>
+                    <div class="file-actions">
+                        <button class="btn-file" onclick="document.getElementById('fileInput').click()">📂 فتح ملف نصي</button>
+                        <button class="btn-file" id="downloadBtn" onclick="downloadResult()" disabled>💾 حفظ كملف نصي</button>
+                    </div>
                     <input type="file" id="fileInput" accept=".txt,text/plain" style="display: none;">
                 </div>
                 <textarea id="inputText" placeholder="الصق النص هنا... (Ctrl+Enter للمعالجة السريعة)"></textarea>
@@ -439,10 +453,8 @@
 
             <div class="button-group">
                 <button class="btn-process" onclick="processText()" id="processBtn"> معالجة النص</button>
-                <button class="btn-paste" onclick="pasteAndProcess()">📥 لصق ومعالجة</button>
                 <button class="btn-clear" id="clearBtn" onclick="clearText()">🧹 محو النص</button>
                 <button class="btn-copy" id="copyBtn" onclick="copyResult()" disabled>📋 نسخ النتيجة</button>
-                <button class="btn-download" id="downloadBtn" onclick="downloadResult()" disabled>💾 حفظ كملف نصي</button>
             </div>
 
             <div class="loading" id="loading">
@@ -800,27 +812,6 @@
                 }
             } catch (e) {}
         })();
-
-        // لصق نص الحافظة ومعالجته بضغطة واحدة
-        async function pasteAndProcess() {
-            if (!navigator.clipboard || !navigator.clipboard.readText || !window.isSecureContext) {
-                showToast('⚠️ المتصفح لا يسمح باللصق التلقائي هنا، الصق النص يدوياً (Ctrl+V)');
-                return;
-            }
-            try {
-                const clipText = await navigator.clipboard.readText();
-                if (!clipText.trim()) {
-                    showToast('⚠️ الحافظة فارغة');
-                    return;
-                }
-                const input = document.getElementById('inputText');
-                input.value = clipText;
-                input.dispatchEvent(new Event('input'));
-                processText();
-            } catch (e) {
-                showToast('⚠️ تعذر الوصول إلى الحافظة، الصق النص يدوياً (Ctrl+V)');
-            }
-        }
 
         function showToast(message) {
             const toast = document.getElementById('toast');
