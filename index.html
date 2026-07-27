@@ -105,7 +105,7 @@
             padding: 15px;
             border: 2px solid #E0D6C4;
             border-radius: 10px;
-            font-family: 'Traditional Arabic', 'Arial', sans-serif;
+            font-family: 'Traditional Arabic', 'Noto Naskh Arabic', 'Amiri', 'Sakkal Majalla', 'Arial', sans-serif;
             font-size: 16px;
             line-height: 1.8;
             resize: vertical;
@@ -239,7 +239,7 @@
             border-top: 3px solid #8B5A2B;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-left: 10px;
+            margin-inline-start: 10px;
         }
 
         @keyframes spin {
@@ -302,7 +302,8 @@
         }
 
         .stat-value {
-            color: #B8860B;
+            /* درجة داكنة تحقق تباين WCAG AA على الخلفية البيضاء */
+            color: #8A6508;
             font-weight: 700;
             font-size: 18px;
         }
@@ -330,11 +331,14 @@
         }
 
         .text-content {
-            font-family: 'Traditional Arabic', 'Arial', sans-serif;
+            font-family: 'Traditional Arabic', 'Noto Naskh Arabic', 'Amiri', 'Sakkal Majalla', 'Arial', sans-serif;
             line-height: 1.8;
             color: #3D2817;
             white-space: pre-wrap;
             word-wrap: break-word;
+            /* حد أقصى للارتفاع مع تمرير داخلي حتى لا تتضخم الصفحة مع الضبوط الطويلة */
+            max-height: 60vh;
+            overflow-y: auto;
         }
 
         .corrected-word {
@@ -368,13 +372,15 @@
         }
 
         .highlight-legend span span {
-            margin-left: 4px;
+            /* مسافة بين عيّنة التظليل والنص الشارح الذي يليها (منطقية لدعم RTL) */
+            margin-inline-end: 4px;
         }
 
         .toast {
             position: fixed;
             top: 20px;
-            right: 20px;
+            /* خاصية منطقية: في واجهة RTL يظهر التوست جهة نهاية السطر فلا يغطي بدايته */
+            inset-inline-end: 20px;
             background: #6B4423;
             color: white;
             padding: 15px 25px;
@@ -391,7 +397,7 @@
 
         @keyframes slideIn {
             from {
-                transform: translateX(100%);
+                transform: translateX(-120%);
                 opacity: 0;
             }
             to {
@@ -426,14 +432,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1> معالج الصكوك القضائية</h1>
-            <p>أداة احترافية لمعالجة وتنسيق نصوص الضبوط القضائية - نسخة 5.3</p>
+            <h1>معالج الصكوك القضائية</h1>
+            <p>أداة احترافية لمعالجة وتنسيق نصوص الضبوط القضائية - نسخة 5.4</p>
         </div>
 
         <div class="content">
             <div class="input-section">
                 <div class="label-row">
-                    <label for="inputText"> أدخل نص الضبوط:</label>
+                    <label for="inputText">أدخل نص الضبوط:</label>
                     <div class="file-actions">
                         <button class="btn-file" onclick="document.getElementById('fileInput').click()">📂 فتح ملف نصي</button>
                         <button class="btn-file" id="downloadBtn" onclick="downloadResult()" disabled>💾 حفظ كملف نصي</button>
@@ -447,23 +453,23 @@
             <div class="options-section">
                 <div class="checkbox-wrapper">
                     <input type="checkbox" id="enableCorrection" checked>
-                    <label for="enableCorrection"> تفعيل التشكيل التلقائي والتصحيح</label>
+                    <label for="enableCorrection">تفعيل التشكيل التلقائي والتصحيح</label>
                 </div>
             </div>
 
             <div class="button-group">
-                <button class="btn-process" onclick="processText()" id="processBtn"> معالجة النص</button>
+                <button class="btn-process" onclick="processText()" id="processBtn">معالجة النص</button>
                 <button class="btn-clear" id="clearBtn" onclick="clearText()">🧹 محو النص</button>
                 <button class="btn-copy" id="copyBtn" onclick="copyResult()" disabled>📋 نسخ النتيجة</button>
             </div>
 
-            <div class="loading" id="loading">
+            <div class="loading" id="loading" role="status" aria-live="polite">
                 <span>⏳ جارٍ معالجة النص وتطبيق التصحيحات...</span>
-                <div class="loading-spinner"></div>
+                <div class="loading-spinner" aria-hidden="true"></div>
             </div>
 
             <div class="stats" id="stats">
-                <h3> إحصائيات العمليات</h3>
+                <h3>إحصائيات العمليات</h3>
                 <div class="stats-grid">
                     <div class="stats-column">
                         <div class="stat-item">
@@ -517,7 +523,7 @@
         </div>
     </div>
 
-    <div class="toast" id="toast"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
         let processedResult = '';
@@ -811,11 +817,15 @@
             } catch (e) {}
         })();
 
+        let toastTimer;
+
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.textContent = message;
             toast.classList.add('show');
-            setTimeout(() => {
+            // إلغاء مؤقّت الرسالة السابقة حتى لا يُخفي الرسالة الحالية مبكراً
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
         }
@@ -833,7 +843,7 @@
                 .replace(/"/g, '&quot;');
         }
 
-        async function processText() {
+        function processText() {
             const inputText = document.getElementById('inputText').value;
 
             if (!inputText.trim()) {
@@ -855,6 +865,7 @@
                 let deletedCount = 0;
                 let emptyLinesCount = 0;
                 let correctionsCount = 0;
+                let shatbSkipped = 0;
 
                 // 1. استبدال المسافتين بمسافة واحدة
                 const beforeSpaces = text;
@@ -981,7 +992,12 @@
                     });
                 }
 
-                // النمط القديم (ريقاكس) لدمج الجلسات
+                // آلية الدمج الاحتياطية (العامة):
+                // تلتقط فواصل جلسات لم تغطها الأنماط المحددة في الخطوة 4. حدودها الموثقة:
+                //   - تعمل فقط على مقاطع أقصر من 17 كلمة بين «رفعت الجلسة» و«حضر»
+                //     وتحوي إحدى عبارات الختام المعروفة (وبالله التوفيق / ختامها / للدراسة)
+                //   - تتجاهل أي مقطع سبق أن عولج بالأنماط المحددة (يحوي علامات داخلية)
+                //     منعاً للدمج المزدوج والعد المزدوج في الإحصائيات
                 const sessionRegex = /(رفعت?\s+الجلسة)([\s\S]*?)(حضرت?(?:\s|$))/g;
                 let match;
                 const sessionMatches = [];
@@ -998,6 +1014,11 @@
                 for (let i = sessionMatches.length - 1; i >= 0; i--) {
                     const m = sessionMatches[i];
                     const middleText = m.middle;
+
+                    if (/[\u0001-\u0003]/.test(middleText)) {
+                        continue;
+                    }
+
                     const wordCount = middleText.trim().split(/\s+/).length;
 
                     if (wordCount < 17) {
@@ -1018,28 +1039,34 @@
                 text = text.replace(/ووفي\s+جلسة\s+أخرى/g, 'وفي جلسة أخرى');
 
                 // 6. حذف جلسات الشطب
+                // يُقيَّد البحث عن صيغة الختام بنطاق الجلسة نفسها (حتى بداية الجلسة التالية إن وُجدت)
+                // حتى لا يلتهم الحذف جلسات صحيحة إذا لم تُختم جلسة الشطب بالصيغة المتوقعة.
+                // عند تعذر تحديد النهاية بأمان يُتجاوز الحذف ويُنبَّه المستخدم
                 const shatbPattern = /لذا\s+(?:فقد\s+)?قررت\s+الد(?:َّ)?ائرة\s+شطب\s+الدعوى/g;
                 let shatbMatch;
                 const shatbPositions = [];
-                
+
                 while ((shatbMatch = shatbPattern.exec(text)) !== null) {
                     shatbPositions.push(shatbMatch.index);
                 }
 
+                // أنماط بداية الجلسة — تُستخدم لتحديد بداية نطاق الحذف ونهايته الآمنة
+                const sessionStartSources = [
+                    'افتتحت\\s+الجلسة',
+                    'فلدي\\s+أنا',
+                    'لدي\\s+أنا',
+                    'وفي\\s+هذا\\s+اليوم\\s+عقدت\\s+الد(?:َّ)?ائرة\\s+هذه\\s+الجلسة'
+                ];
+
                 for (let i = shatbPositions.length - 1; i >= 0; i--) {
                     const shatbPos = shatbPositions[i];
                     const textBeforeShatb = text.substring(0, shatbPos);
-                    
-                    const startPatterns = [
-                    /افتتحت\s+الجلسة/g,
-                    /فلدي\s+أنا/g,
-                    /لدي\s+أنا/g,
-                    /وفي\s+هذا\s+اليوم\s+عقدت\s+الد(?:َّ)?ائرة\s+هذه\s+الجلسة/g
-                ];
 
+                    // آخر بداية جلسة قبل عبارة الشطب = بداية نطاق الحذف
                     let lastStartPos = -1;
-                    
-                    for (const pattern of startPatterns) {
+
+                    for (const source of sessionStartSources) {
+                        const pattern = new RegExp(source, 'g');
                         let startMatch;
                         while ((startMatch = pattern.exec(textBeforeShatb)) !== null) {
                             if (startMatch.index > lastStartPos) {
@@ -1047,16 +1074,28 @@
                             }
                         }
                     }
-                    
+
                     if (lastStartPos !== -1) {
                         const textAfterShatb = text.substring(shatbPos);
+
+                        // أول بداية جلسة تالية بعد عبارة الشطب = الحد الأقصى الآمن لنطاق الحذف
+                        let nextStartPos = textAfterShatb.length;
+                        for (const source of sessionStartSources) {
+                            const nextMatch = new RegExp(source, 'g').exec(textAfterShatb);
+                            if (nextMatch && nextMatch.index < nextStartPos) {
+                                nextStartPos = nextMatch.index;
+                            }
+                        }
+
                         const endPattern = /وصحبه\s+(?:أجمعين|وسلَّم|وسلم)\s*\.?/;
-                        const endMatch = endPattern.exec(textAfterShatb);
-                        
+                        const endMatch = endPattern.exec(textAfterShatb.substring(0, nextStartPos));
+
                         if (endMatch) {
                             const endPos = shatbPos + endMatch.index + endMatch[0].length;
                             text = text.substring(0, lastStartPos) + DELETE_MARK + text.substring(endPos);
                             deletedCount++;
+                        } else {
+                            shatbSkipped++;
                         }
                     }
                 }
@@ -1106,7 +1145,11 @@
                 document.getElementById('copyBtn').disabled = false;
                 document.getElementById('downloadBtn').disabled = false;
 
-                showToast('✅ تمت المعالجة بنجاح!');
+                if (shatbSkipped > 0) {
+                    showToast('⚠️ تمت المعالجة، وتم تجاوز حذف ' + shatbSkipped.toLocaleString('ar-SA') + ' جلسة شطب لتعذر تحديد نهايتها بأمان');
+                } else {
+                    showToast('✅ تمت المعالجة بنجاح!');
+                }
                 } catch (err) {
                     showToast('❌ حدث خطأ غير متوقع أثناء المعالجة، يرجى المحاولة مرة أخرى');
                 } finally {
@@ -1186,9 +1229,28 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            
+
             showToast('✅ تم تحميل الملف بنجاح!');
         }
+
+        // تمرير متزامن (نسبي) بين صندوقي المقارنة لتسهيل مراجعة الضبوط الطويلة
+        (function syncComparisonScroll() {
+            const panes = [document.getElementById('originalText'), document.getElementById('processedText')];
+            let activePane = null;
+            let releaseTimer;
+            panes.forEach((pane, idx) => {
+                const other = panes[1 - idx];
+                pane.addEventListener('scroll', () => {
+                    if (activePane && activePane !== pane) return;
+                    activePane = pane;
+                    const max = pane.scrollHeight - pane.clientHeight;
+                    const ratio = max > 0 ? pane.scrollTop / max : 0;
+                    other.scrollTop = ratio * (other.scrollHeight - other.clientHeight);
+                    clearTimeout(releaseTimer);
+                    releaseTimer = setTimeout(() => { activePane = null; }, 150);
+                });
+            });
+        })();
     </script>
 </body>
 </html>
