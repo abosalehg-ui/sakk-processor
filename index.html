@@ -433,7 +433,7 @@
     <div class="container">
         <div class="header">
             <h1>معالج الصكوك القضائية</h1>
-            <p>أداة احترافية لمعالجة وتنسيق نصوص الضبوط القضائية - نسخة 5.5</p>
+            <p>أداة احترافية لمعالجة وتنسيق نصوص الضبوط القضائية - نسخة 5.6</p>
         </div>
 
         <div class="content">
@@ -887,10 +887,16 @@
                 // ===== أنماط فرعية موحّدة =====
                 // عبارة افتتاح الجلسة بكل صيغها (عادية / هذه / المرئية / عن بعد / عبر الاتصال المرئي)
                 const SESSION_OPEN = String.raw`افتتحت\s+(?:هذه\s+)?الجلسة(?:\s+المرئية)?(?:\s+(?:عبر\s+الترافع\s+المرئي|بالترافع\s+المرئي|عبر\s+الاتصال\s+المرئي|بالاتصال\s+المرئي))?(?:\s+عن\s+بُ?عد)?`;
-                // ذيل «وفيها» يُحذف مع عبارة الافتتاح
-                const TAIL = String.raw`(?:\s+وفيها)?(?:\s+و(?=\s|$))?`;
-                // عبارة ختام الجلسة بالساعة
-                const KHITAM = String.raw`وكان\s+ختامها\s+الساعة\s+\d{1,2}:\d{2}\s+(?:صباحاً|صباحًا|مساءً|مساءًا|[صم])(?![\u0600-\u06FF])`;
+                // ذيل «وفيها» يُحذف مع عبارة الافتتاح (بمسافة أو بفاصلة قبله: «عن بعد، وفيها»)
+                const TAIL = String.raw`(?:(?:\s*[،,]\s*|\s+)وفيها)?(?:\s+و(?=\s|$))?`;
+                // نطاق علامات التشكيل (فتحة/ضمة/كسرة/شدة/سكون/تنوين) — تُقبل داخل الكلمات المفتاحية
+                const TASHKEEL = String.raw`[\u064B-\u0652]`;
+                // «صباحاً/صباحًا/صباحا/مساءً/مساءًا/مساء» أو اختصار «ص/م» بشرط ألا يليه حرف عربي
+                const TIME_PERIOD = String.raw`(?:(?:صباح|مساء)${TASHKEEL}?ا?${TASHKEEL}?|[صم])(?![\u0600-\u06FF])`;
+                // عبارة ختام الجلسة بالساعة: «وكان ختامها الساعة» أو «وأغلقت/واغلقت الجلسة الساعة»
+                const KHITAM = String.raw`(?:وكان\s+ختامها|و?[اأإ]?${TASHKEEL}?غلقت\s+الجلسة)\s+الساعة\s+\d{1,2}:\d{2}\s+` + TIME_PERIOD;
+                // «رفع/رفعت» مع قبول التشكيل («رُفعت»)
+                const RUFIAT = String.raw`ر${TASHKEEL}?ف${TASHKEEL}?ع${TASHKEEL}?ت?${TASHKEEL}?`;
                 // عبارة التوفيق بكل صيغها (هذا وبالله / هذا بالله / وبالله / بالله)
                 // عبارة الصلاة على النبي التي قد تلي «وبالله التوفيق» (اختيارية)
                 const SALAT = String.raw`(?:\s*[.،,]?\s*وصلى\s+الله\s+(?:وسلم\s+)?على\s+نبينا\s+محمد\s+و[آاأ]له\s+وصحبه(?:\s+وسلم)?(?:\s+[اأ]جمعين)?)?`;
@@ -915,7 +921,7 @@
 
                 // 3- رفع الجلسة للنطق بالحكم. افتتحت الجلسة [المرئية عن بعد] [وفيها]
                 {
-                    pattern: new RegExp(String.raw`(رفعت?\s+الجلسة\s+للنطق\s+بالحكم)\s*\.?\s*` + SESSION_OPEN + TAIL, 'g'),
+                    pattern: new RegExp(String.raw`(${RUFIAT}\s+الجلسة\s+للنطق\s+بالحكم)\s*\.?\s*` + SESSION_OPEN + TAIL, 'g'),
                     replacement: '$1. وفي جلسة أخرى'
                 },
                 // 4- وإذا لم يحضر يحكم عليه بالنكول. [و]في هذه الجلسة
@@ -951,12 +957,12 @@
 
                 // 9- رفع/رفعت الجلسة [.] افتتحت الجلسة [المرئية عن بعد] [وفيها]
                 {
-                    pattern: new RegExp(String.raw`(رفعت?\s+الجلسة(?:\s+(?:لذلك|لذا))?)\s*\.?\s*` + SESSION_OPEN + TAIL, 'g'),
+                    pattern: new RegExp(String.raw`(${RUFIAT}\s+الجلسة(?:\s+(?:لذلك|لذا))?)\s*\.?\s*` + SESSION_OPEN + TAIL, 'g'),
                     replacement: '$1. وفي جلسة أخرى'
                 },
                 // 10- رفع/رفعت الجلسة [.] [و]في هذه الجلسة
                 {
-                    pattern: /(رفعت?\s+الجلسة(?:\s+(?:لذلك|لذا))?)\s*\.?\s*و?في\s+هذه\s+الجلسة/g,
+                    pattern: new RegExp(String.raw`(${RUFIAT}\s+الجلسة(?:\s+(?:لذلك|لذا))?)\s*\.?\s*و?في\s+هذه\s+الجلسة`, 'g'),
                     replacement: '$1. وفي جلسة أخرى'
                 },
 
@@ -964,7 +970,7 @@
 
                 // 11- صباحاً/مساءً. [و]في هذه الجلسة (نمط مختصر)
                 {
-                    pattern: /(?:صباحاً|صباحًا|مساءً|مساءًا)\s*\.\s*و?في\s+هذه\s+الجلسة/g,
+                    pattern: new RegExp(TIME_PERIOD + String.raw`\s*\.\s*و?في\s+هذه\s+الجلسة`, 'g'),
                     replacement: 'وفي جلسة أخرى'
                 }
             ];
@@ -1000,7 +1006,7 @@
                 //     وتحوي إحدى عبارات الختام المعروفة (وبالله التوفيق / ختامها / للدراسة)
                 //   - تتجاهل أي مقطع سبق أن عولج بالأنماط المحددة (يحوي علامات داخلية)
                 //     منعاً للدمج المزدوج والعد المزدوج في الإحصائيات
-                const sessionRegex = /(رفعت?\s+الجلسة)([\s\S]*?)(حضرت?(?:\s|$))/g;
+                const sessionRegex = new RegExp(String.raw`(${RUFIAT}\s+الجلسة)([\s\S]*?)(حضرت?(?:\s|$))`, 'g');
                 let match;
                 const sessionMatches = [];
                 while ((match = sessionRegex.exec(text)) !== null) {
@@ -1052,13 +1058,28 @@
                     shatbPositions.push(shatbMatch.index);
                 }
 
-                // أنماط بداية الجلسة — تُستخدم لتحديد بداية نطاق الحذف ونهايته الآمنة
+                // أنماط بداية الجلسة — تُستخدم لتحديد بداية نطاق الحذف ونهايته الآمنة.
+                // علامة الدمج (MERGE_START) تُعد بداية جلسة أيضاً: الخطوة 4 تكون قد استبدلت
+                // افتتاح جلسة الشطب بعبارة «وفي جلسة أخرى»، فلولا ذلك لامتد الحذف إلى الجلسة السابقة.
                 const sessionStartSources = [
+                    MERGE_START,
                     'افتتحت\\s+الجلسة',
                     'فلدي\\s+أنا',
                     'لدي\\s+أنا',
                     'وفي\\s+هذا\\s+اليوم\\s+عقدت\\s+الد[\\u064B-\\u0652]*ائرة\\s+هذه\\s+الجلسة'
                 ];
+                // صيغ ختام جلسة الشطب:
+                //   - «وصحبه أجمعين / وصحبه وسلم»
+                //   - «[و]على ذلك أغلقت/اغلقت الجلسة[، وبالله التوفيق ...]»
+                //   - «وأغلقت/واغلقت الجلسة الساعة 09:15 صباحا»
+                const shatbEndPattern = new RegExp(
+                    String.raw`(?:وصحبه\s+(?:أجمعين|وسل${TASHKEEL}*م)` +
+                    String.raw`|(?:(?:و\s*)?على\s+ذلك\s+)?و?[اأإ]?${TASHKEEL}?غلقت\s+الجلسة` +
+                    String.raw`(?:\s+الساعة\s+\d{1,2}:\d{2}(?:\s+${TIME_PERIOD})?)?` +
+                    String.raw`(?:\s*[،,]\s*(?:هذا\s+)?و?بالله\s+التوفيق(?:\s+وصلى\s+الله[\s\S]{0,80}?وسل${TASHKEEL}*م)?)?)\s*[.،]?`
+                );
+                // افتتاح الجلسة التالية الذي يُدمج بعد حذف جلسة شطب كان افتتاحها مدمجاً بالجلسة السابقة
+                const reopenPattern = new RegExp(String.raw`^\s*(?:` + SESSION_OPEN + TAIL + String.raw`|و?في\s+هذه\s+الجلسة)`);
 
                 for (let i = shatbPositions.length - 1; i >= 0; i--) {
                     const shatbPos = shatbPositions[i];
@@ -1089,12 +1110,31 @@
                             }
                         }
 
-                        const endPattern = /(?:وصحبه\s+(?:أجمعين|وسل[\u064B-\u0652]*م)|(?:و\s*)?على\s+ذلك\s+أ?غلقت\s+الجلسة(?:\s*[،,]\s*(?:هذا\s+)?و?بالله\s+التوفيق(?:\s+وصلى\s+الله[\s\S]{0,80}?وسل[\u064B-\u0652]*م)?)?)\s*[.،]?/;
-                        const endMatch = endPattern.exec(textAfterShatb.substring(0, nextStartPos));
+                        const endMatch = shatbEndPattern.exec(textAfterShatb.substring(0, nextStartPos));
+                        const startsAtMerge = text[lastStartPos] === MERGE_START;
+                        let endPos = -1;
 
                         if (endMatch) {
-                            const endPos = shatbPos + endMatch.index + endMatch[0].length;
-                            text = text.substring(0, lastStartPos) + DELETE_MARK + text.substring(endPos);
+                            endPos = shatbPos + endMatch.index + endMatch[0].length;
+                        } else if (nextStartPos < textAfterShatb.length && textAfterShatb[nextStartPos] === MERGE_START) {
+                            // ختام جلسة الشطب استهلكته الخطوة 4 (دُمج مع افتتاح الجلسة التالية)،
+                            // وعلامة الدمج التالية حد مضمون لنهاية الجلسة
+                            endPos = shatbPos + nextStartPos;
+                        }
+
+                        if (endPos !== -1) {
+                            let after = text.substring(endPos);
+                            if (startsAtMerge) {
+                                // كان افتتاح جلسة الشطب مدمجاً بختام الجلسة السابقة؛ يُنقل الدمج إلى
+                                // افتتاح الجلسة التالية إن كان بصيغة معروفة حتى لا يبقى ختام بلا دمج
+                                const reopen = reopenPattern.exec(after);
+                                if (reopen) {
+                                    after = ' ' + MERGED_PHRASE + after.substring(reopen[0].length);
+                                } else {
+                                    sessionsCount--;
+                                }
+                            }
+                            text = text.substring(0, lastStartPos) + DELETE_MARK + (/^\s/.test(after) ? '' : ' ') + after;
                             deletedCount++;
                         } else {
                             shatbSkipped++;
